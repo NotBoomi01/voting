@@ -1,3 +1,5 @@
+<?php include('includes/navbarr.php'); ?>
+
 <?php
 // Database credentials (Replace with your own credentials)
 $servername = "localhost"; // Usually 'localhost'
@@ -122,8 +124,7 @@ $conn->close();
         <?php if (count($candidates) > 0): ?>
             <?php foreach ($candidates as $candidate): ?>
                 <div class="candidate-card">
-                    <img src="<?php echo htmlspecialchars($candidate['Image']); ?>" alt="Candidate Picture">
-                    <h6 class="candidate-name" data-candidate-id="<?php echo $candidate['id']; ?>">
+                <img src="uploads/<?php echo htmlspecialchars($candidate['Image']); ?>" alt="Candidate Image" style="width: 200px; height: 200px; object-fit: cover;">                    <h6 class="candidate-name" data-candidate-id="<?php echo $candidate['id']; ?>">
                         <?php echo htmlspecialchars($candidate['Name']); ?>
                     </h6>
                     <p class="candidate-position"><?php echo htmlspecialchars($candidate['Position']); ?></p>

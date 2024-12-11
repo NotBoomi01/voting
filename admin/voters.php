@@ -31,7 +31,6 @@ $result = $conn->query($sql);
                 <th>Firstname</th>
                 <th>Email</th>
                 
-                <th>Tools</th>
             </tr>
         </thead>
         <tbody>
@@ -41,9 +40,7 @@ $result = $conn->query($sql);
                         <td><?php echo htmlspecialchars($row['LastName']); ?></td>
                         <td><?php echo htmlspecialchars($row['FirstName']); ?></td>
                         <td><?php echo htmlspecialchars($row['Email']); ?></td>
-                        <td>
-                            <a href="edit_voter.php?id=<?php echo $row['id']; ?>" class="btn btn-success btn-sm">Edit</a>
-                        </td>
+                        
                     </tr>
                 <?php endwhile; ?>
             <?php else: ?>
