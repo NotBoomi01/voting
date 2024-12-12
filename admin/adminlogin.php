@@ -1,3 +1,4 @@
+  
 <?php
 // Start the session to store login state
 session_start();
@@ -6,7 +7,7 @@ session_start();
 $servername = "localhost"; // Usually 'localhost'
 $username = "root"; // Your MySQL username (default is 'root')
 $password = ""; // Your MySQL password (default is empty for 'root' in local setups)
-$dbname = "voting"; // Your database name
+$dbname = "online_voting"; // Your database name
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

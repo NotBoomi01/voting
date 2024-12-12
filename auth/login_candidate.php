@@ -11,7 +11,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
         //connect to database
         $host = "localhost";
-        $database = "onlinevoting";
+        $database = "online_voting";
         $dbusername = "root";
         $dbpassword = "";
 

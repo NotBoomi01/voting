@@ -27,7 +27,7 @@
                 <ul class="navbar-nav">
                     <!-- Logout Button Redirecting to adminlogin.php -->
                     <li class="nav-item">
-                        <a class="nav-link btn btn-danger text-white" href="adminlogin.php">Logout</a>
+                    <a class="btn btn-danger ms-auto" href="/logout.php">Logout</a>
                     </li>
                 </ul>
             </div>

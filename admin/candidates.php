@@ -2,7 +2,7 @@
 
 <?php
 // Database connection
-$conn = new mysqli('localhost', 'root', '', 'voting');
+$conn = new mysqli('localhost', 'root', '', 'online_voting');
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
