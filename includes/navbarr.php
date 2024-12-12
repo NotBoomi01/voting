@@ -17,15 +17,20 @@ try {
 
     // Check if user is logged in
     if (isset($_SESSION['user_id'])) {
+        echo "User ID from session: " . $_SESSION['user_id'] . "<br>"; // Debugging output
+
         $stmt = $pdo->prepare("SELECT Username FROM voters WHERE id = :id");
         $stmt->bindParam(':id', $_SESSION['user_id'], PDO::PARAM_INT);
-        $stmt->execute();
 
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        // Update display username if user is found
-        if ($user && isset($user['Username'])) {
-            $displayUsername = htmlspecialchars($user['Username']); // Ensure the case matches your database schema
+        if ($stmt->execute()) {
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($user) {
+                $displayUsername = htmlspecialchars($user['Username']);
+            } else {
+                echo "No user found with this ID.<br>"; // Debugging output
+            }
+        } else {
+            echo "Query execution failed.<br>"; // Debugging output
         }
     }
 } catch (PDOException $e) {
@@ -39,16 +44,8 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navbar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 16px;
-        }
-        .navbar a:hover {
-            text-decoration: underline;
-        }
         .navbar-text {
             color: white;
             font-size: 16px;

@@ -21,7 +21,7 @@
                         <a class="nav-link" href="candidates.php">Candidates</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="results.php">Results</a>
+                        <a class="nav-link" href="voteresult.php">Results</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">

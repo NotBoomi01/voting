@@ -72,30 +72,29 @@ $conn->close();
             margin-bottom: 10px;
         }
         .candidate-info {
-            list-style: none;
-            padding: 0;
-        }
-        .candidate-info li {
-            margin: 5px 0;
-        }
-        .candidate-position {
-            font-weight: bold;
-            margin-top: 10px;
-        }
-        .candidate-name {
-            cursor: pointer;
-            color: black;
-            font-weight: normal;
-        }
-        .candidate-row {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
+            list-style-type: none; /* Remove bullet points */
+            padding-left: 0; /* Remove left padding */
         }
         .vote-options {
             text-align: center;
             margin-top: 20px;
+        }
+        .form-check { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin-bottom: 10px; 
+        }
+        .form-check-input { 
+            margin-right: 10px; /* Adjust spacing between radio button and label */
+        }
+
+        /* Centering the voting options */
+        .vote-options form {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center items horizontally */
+            justify-content: center; /* Center items vertically */
         }
     </style>
 </head>
@@ -111,11 +110,8 @@ $conn->close();
                 <?php if (count($candidatesEscort) > 0): ?>
                     <?php foreach ($candidatesEscort as $candidate): ?>
                         <div class="candidate-card">
-                            <img src="uploads/<?php echo htmlspecialchars($candidate['Image']); ?>" alt="Candidate Image">
-                            <h6 class="candidate-name" data-candidate-id="<?php echo $candidate['id']; ?>">
-                                <?php echo htmlspecialchars($candidate['Name']); ?>
-                            </h6>
-                            <p class="candidate-position">Escort</p>
+                            <img src="uploads/<?php echo htmlspecialchars($candidate['Image']); ?>" alt="<?php echo htmlspecialchars($candidate['Name']); ?>">
+                            <h6><?php echo htmlspecialchars($candidate['Name']); ?></h6>
                             <p>Partylist: <?php echo htmlspecialchars($candidate['Partylist']); ?></p>
                             <ul class="candidate-info">
                                 <?php
@@ -131,32 +127,51 @@ $conn->close();
                     <p>No candidates found for the Escort position.</p>
                 <?php endif; ?>
             </div>
-        </div>
 
-        <!-- Voting Form for Escort -->
-        <div class="vote-options">
-            <form id="votingFormEscort" action="votingEscort.php" method="POST">
-                <h5>Select Your Vote</h5>
-                <?php foreach ($candidatesEscort as $candidate): ?>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="escortCandidate" id="escortCandidate-<?php echo $candidate['id']; ?>" value="<?php echo $candidate['Name']; ?>">
-                        <label class="form-check-label" for="escortCandidate-<?php echo $candidate['id']; ?>">
-                            Vote for <?php echo htmlspecialchars($candidate['Name']); ?>
-                        </label>
-                    </div>
-                <?php endforeach; ?>
-                <button type="submit" class="btn btn-primary">Submit Vote</button>
-            </form>
+            <!-- Voting Form for Escort -->
+            <div class="vote-options">
+                <form id="votingFormEscort" action="logout.php" method="POST" onsubmit="return validateForm()">
+                    <h5>Select Your Vote</h5>
+                    <?php foreach ($candidatesEscort as $candidate): ?>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="escortCandidate" id="escortCandidate-<?php echo $candidate['id']; ?>" value="<?php echo $candidate['Name']; ?>">
+                            <label class="form-check-label" for="escortCandidate-<?php echo $candidate['id']; ?>">
+                                Vote for <?php echo htmlspecialchars($candidate['Name']); ?>
+                            </label>
+                        </div>
+                    <?php endforeach; ?>
+                    <button type="submit" class="btn btn-primary">Submit Vote</button>
+                </form>
+            </div>
+
         </div>
 
     </div>
- <!-- Navigation -->
- <div class="pagination-buttons">
-            <a href="voting3.php" class="btn btn-secondary">Back</a>
-            <a href="index.php?positionIndex=<?php echo min(count($positions) - 1, $positionIndex + 1); ?>" class="btn btn-primary btn-next">Next</a>
-        </div>
-    </div>
+
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
+
+    <script>
+// Validate the voting form to ensure a candidate is selected
+function validateForm() {
+    const radios = document.getElementsByName('escortCandidate');
+    let selected = false;
+
+    for (const radio of radios) {
+        if (radio.checked) {
+            selected = true;
+            break;
+        }
+    }
+
+    if (!selected) {
+        alert("Please select a candidate before proceeding.");
+        return false; // Prevent form submission if no candidate is selected
+    }
+
+    return true; // Allow form submission if a candidate is selected
+}
+</script>
+
 </body>
 </html>
