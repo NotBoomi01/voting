@@ -1,7 +1,9 @@
 <?php
-session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// Ensure session is only started if not already active
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 
 $host = "localhost"; // Usually 'localhost'
 $dbusername = "root"; // Your MySQL username (default is 'root')
@@ -17,7 +19,6 @@ try {
 
     // Check if user is logged in
     if (isset($_SESSION['user_id'])) {
-        echo "User ID from session: " . $_SESSION['user_id'] . "<br>"; // Debugging output
 
         $stmt = $pdo->prepare("SELECT Username FROM voters WHERE id = :id");
         $stmt->bindParam(':id', $_SESSION['user_id'], PDO::PARAM_INT);

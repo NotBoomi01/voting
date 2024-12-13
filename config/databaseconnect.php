@@ -3,7 +3,7 @@
 class DatabaseConnect {
 
     private $host = "localhost";
-    private $database = "onlinevoting";
+    private $database = "online_voting";
     private $dbusername = "root";
     private $dbpassword = "";
     private $conn = null;

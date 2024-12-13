@@ -130,7 +130,9 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit">Register</button>
+                    <form action="login.php" method="post">
+    <button type="submit">Register</button>
+</form>
                 </form>
             </div>
         </div>

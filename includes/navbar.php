@@ -23,6 +23,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="voteresult.php">Results</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="partylist.php">Partylist</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav">
                     <!-- Logout Button Redirecting to adminlogin.php -->

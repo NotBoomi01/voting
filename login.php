@@ -1,3 +1,64 @@
+<?php
+// Start the session
+session_start();
+
+// Database credentials
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "online_voting";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Variables to store errors
+$errorMessage = "";
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get input values
+    $adminUsername = $_POST['username'];
+    $adminPassword = $_POST['password'];
+
+    // Sanitize input (basic sanitization, consider using prepared statements)
+    $adminUsername = htmlspecialchars($adminUsername); 
+
+    // Prepare statement to prevent SQL injection
+    $sql = "SELECT id, password FROM voters WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $adminUsername);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 1) {
+        $row = $result->fetch_assoc();
+        $hashedPassword = $row['password'];
+
+        // Verify password hash
+        if (password_verify($adminPassword, $hashedPassword)) {
+            // Authentication successful
+            $_SESSION['voters_logged_in'] = true;
+            $_SESSION['user_id'] = $row['id']; // Store user ID in session
+            header("Location: voting1.php");
+            exit();
+        } else {
+            $errorMessage = "Invalid password.";
+        }
+    } else {
+        $errorMessage = "Invalid username.";
+    }
+
+    $stmt->close();
+}
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +71,10 @@
             height: 100%;
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            background-image: url('../images/Faculty-election-social.jpg'); 
+            background-size: cover; 
+            background-position: center center; 
+            background-repeat: no-repeat;
         }
 
         /* Flexbox layout for footer placement */
@@ -92,7 +156,10 @@
         <div class="main-content">
             <div class="registration-form">
                 <h2>Login</h2>
-                <form action="voting1.php" method="POST">
+                <?php if (!empty($errorMessage)): ?>
+                    <div style="color:red; text-align:center;"><?php echo $errorMessage; ?></div>
+                <?php endif; ?>
+                <form action="" method="POST">
                     <!-- Username Field -->
                     <div class="form-group">
                         <label for="username">Username:</label>
@@ -108,6 +175,7 @@
                     <!-- Submit Button -->
                     <button type="submit">Login</button>
                 </form>
+                <p style="text-align:center;">Don't have an account? <a href="register.php">Register here</a></p>
             </div>
         </div>
 
